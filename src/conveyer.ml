@@ -1,3 +1,7 @@
 open Core.Std
 
-let () = Out_channel.write_all "tmp/destination/index.html" (In_channel.read_all "tmp/source/index.md")
+let generate directory = 
+  let source = In_channel.read_all (directory ^ "/index.md") in
+  Out_channel.write_all ~data:source "tmp/destination/index.html"
+
+let () = generate "tmp/source"
