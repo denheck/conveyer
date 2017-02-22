@@ -6,9 +6,18 @@ let parse_markdown markdown =
   |> Omd.of_string
   |> Omd.to_html
 
-let generate directory = 
-  let source = In_channel.read_all (directory ^ "/index.md") in
-    let parsed_source = parse_markdown source in
-    Out_channel.write_all ~data:parsed_source "tmp/destination/index.html"
+let parse_file file =
+  In_channel.read_all file
+  |> parse_markdown
 
-let () = generate "tmp/source"
+let (/^) a b = Filename.concat a b
+
+let list_files directory =
+  Sys.readdir directory
+  |> Array.to_list
+
+let generate directory = 
+  list_files directory
+  |> List.map ~f:(fun file -> Out_channel.write_all ("tmp/destination" /^ file) (parse_file (directory /^ file)))
+
+let () = ignore(generate "tmp/source")
