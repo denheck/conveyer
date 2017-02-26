@@ -4,9 +4,9 @@ let (/^) a b = Filename.concat a b
 
 exception UnkownFileType of string
 
-type file_tree = 
+type t = 
   | File of string * string
-  | Directory of string * file_tree list
+  | Directory of string * t list
 
 let rec walk_files fn directory_tree path =
   match directory_tree with
