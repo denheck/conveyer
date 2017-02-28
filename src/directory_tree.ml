@@ -4,7 +4,7 @@ let (/^) a b = Filename.concat a b
 
 exception UnkownFileType of string
 
-type t = 
+type t =
   | File of string * string
   | Directory of string * t list
 

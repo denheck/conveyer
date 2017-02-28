@@ -1,2 +1,2 @@
 <src/**>: include
-true: package(core), package(cow), thread
+true: package(str), package(core), package(cow), thread
