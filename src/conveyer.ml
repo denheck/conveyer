@@ -3,11 +3,6 @@ open Cow
 
 let (/^) a b = Filename.concat a b
 
-let parse_markdown markdown =
-  markdown
-  |> Omd.of_string
-  |> Omd.to_html
-
 let write_html filename filepath contents =
   let () = Unix.mkdir_p filepath in
     let output_filename = (Filename.chop_extension (filepath /^ filename)) ^ ".html" in
@@ -17,7 +12,7 @@ let generate_site source destination render_template =
   Directory_tree.walk_files
     (fun filename filepath contents ->
        contents
-       |> parse_markdown
+       |> Parser.parse
        |> render_template "{{body}}"
        |> write_html filename filepath
     )
